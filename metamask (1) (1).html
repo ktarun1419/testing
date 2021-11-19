@@ -1,0 +1,106 @@
+<html>
+    <button onclick="sendTransaction">buynow</button>
+<button onclick="connectwallet">connect</button>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.2.7-rc.0/web3.min.js"></script>
+<script type="text/javascript">
+
+function connectwallet(){
+    const getweb3 = async () => {
+
+        if (window.ethereum) {
+            window.ethereum.enable()
+
+
+        }
+        else {
+            //console.log("Please Connect Metamask");
+            console.error('unable to connect metamask')
+        }
+    }
+    getweb3().then(() => {
+        try {
+            const chainId = window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0x1') {
+                window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: "0x1" }]
+                })
+
+            }
+        } catch (error) {
+            if (error.code === 4902) {
+                window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    param: [{
+                        chainId: "1",
+                        chainName: "mainet",
+
+                        rpcUrls: " https://polygon-rpc.com",
+                    }]
+                });
+
+            };
+            if (error.code ===4001) {
+                alert('please connectto mainnet network')
+                window.location.reload()
+            }
+
+        }
+    })
+    window.onload = getweb3()
+}
+    function sendTransaction() {
+        const acc = window.ethereum.request({ method: 'eth_requestAccounts' });
+        acc.then((result) => {
+            account = result[0];
+            const chainId = window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== '0x89') {
+                const checker = async () => {
+                   await window.ethereum.request({
+                        method: 'wallet_switchEthereumChain',
+                        params: [{ chainId: "0x1" }]
+                    });
+                    const hexvalues=['0xa076407d3f7440000', '0x140ec80fa7ee880000', '0x1e162c177be5cc0000', '0x281d901f4fdd100000', '0x3224f42723d4540000', '0x3c2c582ef7cb980000', '0x4633bc36cbc2dc0000', '0x503b203e9fba200000', '0x5a42844673b1640000', '0x6449e84e47a8a80000', '0x6e514c561b9fec0000', '0x7858b05def97300000', '0x82601465c38e740000', '0x8c67786d9785b80000', '0x966edc756b7cfc0000', '0xa076407d3f74400000', '0xaa7da485136b840000', '0xb485088ce762c80000', '0xbe8c6c94bb5a0c0000', '0xc893d09c8f51500000', '0xd29b34a46348940000', '0xdca298ac373fd80000', '0xe6a9fcb40b371c0000', '0xf0b160bbdf2e600000', '0xfab8c4c3b325a40000', '0x104c028cb871ce80000', '0x10ec78cd35b142c0000', '0x118cef0db2f0b700000', '0x122d654e30302b40000', '0x12cddb8ead6f9f80000', '0x136e51cf2aaf13c0000', '0x140ec80fa7ee8800000', '0x14af3e50252dfc40000', '0x154fb490a26d7080000', '0x15f02ad11face4c0000', '0x1690a1119cec5900000', '0x173117521a2bcd40000', '0x17d18d92976b4180000', '0x187203d314aab5c0000', '0x19127a1391ea2a00000', '0x19b2f0540f299e40000', '0x1a5366948c691280000', '0x1af3dcd509a886c0000', '0x1b94531586e7fb00000', '0x1c34c95604276f40000', '0x1cd53f968166e380000', '0x1d75b5d6fea657c0000', '0x1e162c177be5cc00000', '0x1eb6a257f9254040000', '0x1f5718987664b480000', '0x1ff78ed8f3a428c0000', '0x2098051970e39d00000', '0x21387b59ee231140000', '0x21d8f19a6b628580000', '0x227967dae8a1f9c0000', '0x2319de1b65e16e00000', '0x23ba545be320e240000', '0x245aca9c60605680000', '0x24fb40dcdd9fcac0000', '0x259bb71d5adf3f00000', '0x263c2d5dd81eb340000', '0x26dca39e555e2780000', '0x277d19ded29d9bc0000', '0x281d901f4fdd1000000', '0x28be065fcd1c8440000', '0x295e7ca04a5bf880000', '0x29fef2e0c79b6cc0000', '0x2a9f692144dae100000', '0x2b3fdf61c21a5540000', '0x2be055a23f59c980000', '0x2c80cbe2bc993dc0000', '0x2d21422339d8b200000', '0x2dc1b863b7182640000', '0x2e622ea434579a80000', '0x2f02a4e4b1970ec0000', '0x2fa31b252ed68300000', '0x30439165ac15f740000', '0x30e407a629556b80000', '0x31847de6a694dfc0000', '0x3224f42723d45400000', '0x32c56a67a113c840000', '0x3365e0a81e533c80000', '0x340656e89b92b0c0000', '0x34a6cd2918d22500000', '0x3547436996119940000', '0x35e7b9aa13510d80000', '0x36882fea909081c0000', '0x3728a62b0dcff600000', '0x37c91c6b8b0f6a40000', '0x386992ac084ede80000', '0x390a08ec858e52c0000', '0x39aa7f2d02cdc700000', '0x3a4af56d800d3b40000', '0x3aeb6badfd4caf80000', '0x3b8be1ee7a8c23c0000', '0x3c2c582ef7cb9800000', '0x3cccce6f750b0c40000', '0x3d6d44aff24a8080000', '0x3e0dbaf06f89f4c0000', '0x3eae3130ecc96900000']
+                     var input=document.getElementById("maticnumber").value;
+                    const amount='0x11c37937e080000';
+                    window.ethereum.request({
+                     method: 'eth_sendTransaction',
+                        params: [
+                      {
+                                  from: account,
+                                  to: '0x2225820A93Ba922983e0aDc2267e94a4423d59Ba',
+                                 value: amount,
+                                 //gasPrice: '0x09184e72a000',0x29a2241af62c0000
+                                 //gas: '0x2710',
+                              },
+                          ],
+                     })
+                }
+                checker()
+                
+            } else {
+                const hexvalues=['0xa076407d3f7440000', '0x140ec80fa7ee880000', '0x1e162c177be5cc0000', '0x281d901f4fdd100000', '0x3224f42723d4540000', '0x3c2c582ef7cb980000', '0x4633bc36cbc2dc0000', '0x503b203e9fba200000', '0x5a42844673b1640000', '0x6449e84e47a8a80000', '0x6e514c561b9fec0000', '0x7858b05def97300000', '0x82601465c38e740000', '0x8c67786d9785b80000', '0x966edc756b7cfc0000', '0xa076407d3f74400000', '0xaa7da485136b840000', '0xb485088ce762c80000', '0xbe8c6c94bb5a0c0000', '0xc893d09c8f51500000', '0xd29b34a46348940000', '0xdca298ac373fd80000', '0xe6a9fcb40b371c0000', '0xf0b160bbdf2e600000', '0xfab8c4c3b325a40000', '0x104c028cb871ce80000', '0x10ec78cd35b142c0000', '0x118cef0db2f0b700000', '0x122d654e30302b40000', '0x12cddb8ead6f9f80000', '0x136e51cf2aaf13c0000', '0x140ec80fa7ee8800000', '0x14af3e50252dfc40000', '0x154fb490a26d7080000', '0x15f02ad11face4c0000', '0x1690a1119cec5900000', '0x173117521a2bcd40000', '0x17d18d92976b4180000', '0x187203d314aab5c0000', '0x19127a1391ea2a00000', '0x19b2f0540f299e40000', '0x1a5366948c691280000', '0x1af3dcd509a886c0000', '0x1b94531586e7fb00000', '0x1c34c95604276f40000', '0x1cd53f968166e380000', '0x1d75b5d6fea657c0000', '0x1e162c177be5cc00000', '0x1eb6a257f9254040000', '0x1f5718987664b480000', '0x1ff78ed8f3a428c0000', '0x2098051970e39d00000', '0x21387b59ee231140000', '0x21d8f19a6b628580000', '0x227967dae8a1f9c0000', '0x2319de1b65e16e00000', '0x23ba545be320e240000', '0x245aca9c60605680000', '0x24fb40dcdd9fcac0000', '0x259bb71d5adf3f00000', '0x263c2d5dd81eb340000', '0x26dca39e555e2780000', '0x277d19ded29d9bc0000', '0x281d901f4fdd1000000', '0x28be065fcd1c8440000', '0x295e7ca04a5bf880000', '0x29fef2e0c79b6cc0000', '0x2a9f692144dae100000', '0x2b3fdf61c21a5540000', '0x2be055a23f59c980000', '0x2c80cbe2bc993dc0000', '0x2d21422339d8b200000', '0x2dc1b863b7182640000', '0x2e622ea434579a80000', '0x2f02a4e4b1970ec0000', '0x2fa31b252ed68300000', '0x30439165ac15f740000', '0x30e407a629556b80000', '0x31847de6a694dfc0000', '0x3224f42723d45400000', '0x32c56a67a113c840000', '0x3365e0a81e533c80000', '0x340656e89b92b0c0000', '0x34a6cd2918d22500000', '0x3547436996119940000', '0x35e7b9aa13510d80000', '0x36882fea909081c0000', '0x3728a62b0dcff600000', '0x37c91c6b8b0f6a40000', '0x386992ac084ede80000', '0x390a08ec858e52c0000', '0x39aa7f2d02cdc700000', '0x3a4af56d800d3b40000', '0x3aeb6badfd4caf80000', '0x3b8be1ee7a8c23c0000', '0x3c2c582ef7cb9800000', '0x3cccce6f750b0c40000', '0x3d6d44aff24a8080000', '0x3e0dbaf06f89f4c0000', '0x3eae3130ecc96900000']
+                     var input=document.getElementById("maticnumber").value;
+                    const amount='0x11c37937e080000';
+                window.ethereum.request({
+                    method: 'eth_sendTransaction',
+                    params: [
+                        {
+                            from: account,
+                            to: '0x2225820A93Ba922983e0aDc2267e94a4423d59Ba',
+                            value: amount,
+                            //gasPrice: '0x09184e72a000',0x29a2241af62c0000
+                            //gas: '0x2710',
+                        },
+                    ],
+                })
+            }
+
+        })
+
+    }
+    
+    </script>
+
+</html>
